@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title> 半亩地</title>
+      <title> 明月沟渠</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/girl.ico" />
@@ -59,7 +59,7 @@
       <img src="/images/cover8.jpg" alt="image frame" />
     </div>
     <div class="cover-inner text-center text-white">
-      <h1><a href="/">半亩地</a></h1>
+      <h1><a href="/">明月沟渠</a></h1>
       <div id="subtitle-box">
         
         <span id="subtitle"></span>
@@ -147,6 +147,67 @@
     
     
     
+    
+    <article
+  id="post-uniapp页面跳转时传不同数据的方式"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2024/08/20/uniapp%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E6%97%B6%E4%BC%A0%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/"
+    >uniapp页面跳转时传不同数据的方式</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/08/20/uniapp%E9%A1%B5%E9%9D%A2%E8%B7%B3%E8%BD%AC%E6%97%B6%E4%BC%A0%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E5%BC%8F/" class="article-date">
+  <time datetime="2024-08-20T09:37:53.000Z" itemprop="datePublished">2024-08-20</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="uniapp页面跳转时传递不同数据的方式"><a href="#uniapp页面跳转时传递不同数据的方式" class="headerlink" title="uniapp页面跳转时传递不同数据的方式"></a>uniapp页面跳转时传递不同数据的方式</h1><h2 id="传递单个或多个参数"><a href="#传递单个或多个参数" class="headerlink" title="传递单个或多个参数"></a>传递单个或多个参数</h2><p>传递数据页面:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">gotoUser</span>(<span class="params">id</span>)&#123;</span><br><span class="line">	uni.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">		<span class="attr">url</span>: <span class="string">`gotoUser?id=<span class="subst">$&#123;id&#125;</span>`</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">gotoUser</span>(<span class="params">id, item</span>)&#123;</span><br><span class="line">	uni.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">		<span class="attr">url</span>: <span class="string">`gotoUser?id=<span class="subst">$&#123;id&#125;</span>&amp;item=<span class="subst">$&#123;item&#125;</span>`</span></span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据接收页面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onLoad</span>(<span class="params">option</span>)&#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;上一个页面传递过来的参数&#x27;</span>, option)</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;id&#x27;</span>, option.<span class="property">id</span>)</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;item&#x27;</span>, option.<span class="property">item</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="传递array或object"><a href="#传递array或object" class="headerlink" title="传递array或object"></a>传递array或object</h2><p>由于<code>uniapp</code>跳转页面<code>api</code> 的 <code>url </code>有长度的限制，当传递这种稍复杂的数据时则不能使用上面那种方式，可以使用地址栏传参</p>
+<p>传递数据页面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">gotoUser</span>(<span class="params">item</span>) &#123;</span><br><span class="line">	uni.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">		 <span class="attr">url</span>: <span class="string">`gotoUser?item=<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(<span class="built_in">JSON</span>.stringify(item))&#125;</span>`</span>,</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>数据接收页面：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">onLoad</span>(<span class="params">option</span>) &#123;</span><br><span class="line">	<span class="keyword">const</span> item = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="built_in">decodeURIComponent</span>(option.<span class="property">item</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 此处需要注意的是传递数据的时候必须使用 <code>JSON.stringify</code> 将其转为 JSON 字符串，然后接收的时候也必须使用 <code>JSON.parse</code> 来进行解析！</p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+   
+   
+  
+</article>
+
     
     <article
   id="post-Promise全解"
@@ -734,7 +795,7 @@
 <nav class="navbar">
   
   <div class="logo">
-    <a href="/"><img src="/girl.ico" alt="半亩地"></a>
+    <a href="/"><img src="/girl.ico" alt="明月沟渠"></a>
   </div>
   
   <ul class="nav nav-main">
